@@ -46,7 +46,7 @@ function Posts() {
   };
 
   return (
-    <div className="App">
+    <div className="App" style={{ marginTop: "100px" }}>
       <button onClick={fetchPosts}>GET POSTS</button>
       <MyButton style={{ marginTop: "30px" }} onClick={() => setModal(true)}>
         Создать пользователя

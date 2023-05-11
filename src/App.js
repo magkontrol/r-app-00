@@ -1,30 +1,15 @@
 import React from "react";
 import "./styles/App.scss";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Routes,
-  Link,
-  useRouteMatch,
-  useParams,
-  Redirect,
-} from "react-router-dom";
-import About from "./pages/About";
-import Posts from "./pages/Posts";
+import { BrowserRouter as Router } from "react-router-dom";
 import Navbar from "./components/UI/Navbar/Navbar";
+import AppRouter from "./components/AppRouter";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Navbar />
-
-      <Routes>
-        {" "}
-        <Route path="/about" element={<About />} />
-        <Route path="/posts" element={<Posts />} />
-      </Routes>
-    </BrowserRouter>
+      <AppRouter />
+    </Router>
   );
 }
 

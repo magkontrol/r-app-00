@@ -1,10 +1,11 @@
 import React from "react";
-const About = () => {
+
+const Error = () => {
   return (
     <div style={{ marginTop: "100px" }}>
-      <h1>Это приложение</h1>
+      <h1>Походу ошибка</h1>
     </div>
   );
 };
 
-export default About;
+export default Error;
