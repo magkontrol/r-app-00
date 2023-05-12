@@ -9,15 +9,21 @@ const PostIdPage = () => {
   const { id } = useParams();
 
   const [post, setPost] = useState({});
+  const [comments, setComments] = useState([]);
 
   const [fetchPostById, isLoading, error] = useFetching(async (id) => {
     const response = await PostService.getById(id);
     await setPost(response.data);
   });
 
+  const [fetchComments, isComLoading, comError] = useFetching(async (id) => {
+    const response = await PostService.getCommentsByPostId(id);
+    await setComments(response.data);
+  });
+
   useEffect(() => {
-    console.log(id);
     fetchPostById(id);
+    fetchComments(id);
   }, [id]);
 
   return (
@@ -35,6 +41,23 @@ const PostIdPage = () => {
         </>
       )}
       {error && <div>Произошла ошибка: {error}</div>}
+      <h1>Комментарии</h1>
+      {isComLoading ? (
+        <Loader />
+      ) : (
+        <div>
+          {comments.map((comment) => {
+            return (
+              <div key={comment.id}>
+                <h4>{comment.name}</h4>
+                <h5>{comment.email}</h5>
+                <div>{comment.body}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {comError && <div>Произошла ошибка: {comError}</div>}
     </div>
   );
 };
