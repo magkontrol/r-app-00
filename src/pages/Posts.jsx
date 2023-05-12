@@ -54,9 +54,13 @@ function Posts() {
       <hr style={{ margin: "15px 0" }} />
       <PostFilter filter={filter} setFilter={setFilter} />
 
-      {postError && <h1>Произошла ошибка ${postError} </h1>}
-
-      {isPostLoading ? (
+      {postError && <h1>Произошла ошибка ${postError}</h1>}
+      <PostList
+        remove={removePost}
+        posts={sortedAndSearchedPosts}
+        title={"Список постов"}
+      />
+      {isPostLoading && (
         <div
           style={{
             display: "flex",
@@ -66,14 +70,10 @@ function Posts() {
         >
           <Loader />
         </div>
-      ) : (
-        <PostList
-          remove={removePost}
-          posts={sortedAndSearchedPosts}
-          title={"Список постов"}
-        />
       )}
+
       <Pagination page={page} changePage={changePage} totalPages={totalPages} />
+
       <MyModal visible={modal} setVisible={setModal}>
         {" "}
         <PostForm create={createPost} />{" "}
