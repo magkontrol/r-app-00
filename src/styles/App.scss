@@ -22,6 +22,11 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 15px;
+
+  &__btns {
+    display: flex;
+    gap: 5px;
+  }
 }
 .post-enter {
   transform: translateX(-350px);
