@@ -2,39 +2,39 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loader from "../components/UI/Loader/Loader";
+import { useFetching } from "../hooks/useFetching";
+import PostService from "../API/PostService";
 
 const PostIdPage = () => {
   const { id } = useParams();
-  const [post, setPost] = useState(null);
+
+  const [post, setPost] = useState({});
+
+  const [fetchPostById, isLoading, error] = useFetching(async (id) => {
+    const response = await PostService.getById(id);
+    await setPost(response.data);
+  });
 
   useEffect(() => {
-    const url = (id) => `https://jsonplaceholder.typicode.com/posts/${id}`;
-
-    fetch(url(id))
-      .then((res) => res.json())
-      .then((res) => setPost(res));
-  }, []);
+    console.log(id);
+    fetchPostById(id);
+  }, [id]);
 
   return (
     <div style={{ marginTop: "100px" }}>
-      {post ? (
-        <div>
-          <p>
-            <strong>Body:</strong> {post.body}
-          </p>
-          <p>
-            <strong>ID:</strong> {post.id}
-          </p>
-          <p>
-            <strong>Title:</strong> {post.title}
-          </p>
-          <p>
-            <strong>UserID:</strong> {post.userId}Post
-          </p>
-        </div>
-      ) : (
+      <h1>Текущий пост</h1>
+      {isLoading ? (
         <Loader />
+      ) : (
+        <>
+          <div>
+            {" "}
+            {post.id}. {post.title}{" "}
+          </div>
+          <div>{post.body}</div>
+        </>
       )}
+      {error && <div>Произошла ошибка: {error}</div>}
     </div>
   );
 };
